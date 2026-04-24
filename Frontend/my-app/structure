@@ -1,0 +1,18 @@
+/smartnotes-frontend
+├── /public              # Static assets (logos, icons)
+├── /src
+│   ├── /api            # Axios/Fetch instances to your Express backend
+│   ├── /components      # Reusable UI pieces
+│   │   ├── Layout.js    # Navbar & Sidebar
+│   │   ├── NoteCard.js  # Individual task/note display
+│   │   └── ProtectedRoute.js # Auth wrapper
+│   ├── /contexts       # Global state (Auth & Tasks)
+│   ├── /hooks          # Custom logic (useAuth, useNotes)
+│   ├── /pages          # Main Views
+│   │   ├── Login.js
+│   │   ├── Register.js
+│   │   ├── Dashboard.js # The "CRUD" Task List
+│   │   └── NoteDetail.js # Where the AI logic will live
+│   ├── App.js           # Routes (React Router)
+│   └── index.js
+└── package.json

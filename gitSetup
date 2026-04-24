@@ -1,0 +1,27 @@
+Step 2: Initialize Your Local Project
+Open your terminal (or Git Bash) and navigate to your project folder:
+
+# Navigate to your project
+cd path/to/your/project
+
+# Initialize Git in this folder
+git init
+
+# Add all your files to the "staging area"
+git add .
+
+# Save your changes locally
+git commit -m "Initial commit"
+
+Link Local to GitHub and Upload
+On your new GitHub repository page, you will see a section called "…or push an existing repository from the command line". Copy those commands, or use these (replacing the URL with your actual repo link):
+
+
+# 1. Rename your local branch to 'main'
+git branch -M main
+
+# 2. Connect your local folder to GitHub (Replace the URL with YOUR repo URL)
+git remote add origin https://github.com/your-username/your-repository-name.git
+
+# 3. Upload (push) your files to GitHub
+git push -u origin main
