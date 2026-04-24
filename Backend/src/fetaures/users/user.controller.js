@@ -24,13 +24,13 @@ async userRegisterFun(req, res){
         const db = getDB();
         const findExitingEmail = await db.collection('users').findOne({email}) 
         if(findExitingEmail){
-            return res.status(409).json({msg:'User Email In use', sucess:false})  
+            return res.status(409).json({msg:'User Email In use', success:false})  
         }
        //const userRegister =  await UserModel.userRegister(name, email , password);
 
         const userRegister =  await this.userReposistory.userRegister(name, email , password);
 
-       return res.status(201).json({msg:'User Register Sucessfully', user:userRegister, sucess:true})  
+       return res.status(201).json({msg:'User Register Sucessfully', user:userRegister, success:true})  
      }
     catch(err){
         console.log("Error", err)
@@ -59,7 +59,7 @@ async loginUser(req, res){
           process.env.JWT_SEC,{
              expiresIn: "1h"
         })
-       return res.status(200).json({msg:'User Login Sucessfully', user:user, token:token, sucess:true})  
+       return res.status(200).json({msg:'User Login Sucessfully', user:user, token:token, success:true})  
      }
     catch(err){
         console.log("Error", err)

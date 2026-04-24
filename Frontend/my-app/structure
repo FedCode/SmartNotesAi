@@ -16,3 +16,59 @@
 │   ├── App.js           # Routes (React Router)
 │   └── index.js
 └── package.json
+
+
+You'll need your database user's credentials in the next step. Copy the database user password.
+
+sandeepdesigner336_db_user
+LtsU2JDYbTOGhemD
+
+
+npm install mongodb
+
+
+MongoDb Connection String
+
+3. Add your connection string into your application code
+Use this connection string in your application
+
+
+SRV Connection String
+Show Password
+
+View full code sample
+
+mongodb+srv://sandeepdesigner336_db_user:LtsU2JDYbTOGhemD@smartnotesai.qeuqpto.mongodb.net/?appName=SmartNotesAi
+
+
+
+Connecting with MongoDB Driver
+1. Select your driver and version
+We recommend installing and using the latest driver version.
+
+Driver
+
+Version
+
+2. Install your driver
+Run the following on the command line
+npm install mongodb
+
+View MongoDB Node.js Driver installation instructions.
+3. Add your connection string into your application code
+Use this connection string in your application
+
+
+SRV Connection String
+
+
+
+Show Password
+
+
+
+View full code sample
+
+mongodb+srv://sandeepdesigner336_db_user:LtsU2JDYbTOGhemD@smartnotesai.qeuqpto.mongodb.net/?appName=SmartNotesAi
+
+The password for sandeepdesigner336_db_user is included in the connection string for your first time setup. This password will not be available again after exiting this connect flow.

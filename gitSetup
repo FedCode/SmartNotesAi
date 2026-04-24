@@ -13,6 +13,10 @@ git add .
 # Save your changes locally
 git commit -m "Initial commit"
 
+#Confirm Identity
+git config --global user.email "cbitssdesigner@gmail.com"
+git config --global user.name "Sandeep Kumar"
+
 Link Local to GitHub and Upload
 On your new GitHub repository page, you will see a section called "…or push an existing repository from the command line". Copy those commands, or use these (replacing the URL with your actual repo link):
 
@@ -21,7 +25,45 @@ On your new GitHub repository page, you will see a section called "…or push an
 git branch -M main
 
 # 2. Connect your local folder to GitHub (Replace the URL with YOUR repo URL)
-git remote add origin https://github.com/your-username/your-repository-name.git
+git remote add origin https://github.com/FedCode/SmartNotesAi.git
 
 # 3. Upload (push) your files to GitHub
 git push -u origin main
+
+
+The Standard "Daily" Workflow
+Whenever you finish a feature or a bug fix, run these in order:
+
+Stage the changes:
+
+Bash
+git add .
+(This tells Git to "track" all the files you just modified.)
+
+Save the snapshot:
+
+
+Bash
+git commit -m "Added a login button to frontend"
+(Always write a short, descriptive message so you know what you did when you look back later.)
+
+Upload to GitHub:
+
+Bash
+git push
+
+
+Working from your "Other" System
+As we discussed earlier, if you move to a different computer to continue working, follow this order:
+
+When you arrive at the other PC: Run git pull first to grab the latest work you pushed from the first PC.
+
+When you finish working on that PC: Run the add, commit, and push steps above.
+
+
+Pro-Tips for the Future
+Check Status: If you aren't sure what files you've changed, type git status. It will show you a list of modified files in red.
+
+Mistakes: If you accidentally commit something you didn't mean to, don't panic! Git keeps a history of everything, so nothing is ever truly lost.
+
+Branching: Eventually, you might want to try "Branching" (creating a copy of the code to test an idea without breaking the main version), but for now, sticking to the main branch is perfect for a solo project.

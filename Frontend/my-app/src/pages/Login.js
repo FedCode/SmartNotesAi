@@ -1,4 +1,5 @@
 import styles from "../style/Auth.module.css";
+import {Link} from 'react-router'
 const Login = () => {
   return (
     <div className={styles.container}>
@@ -16,7 +17,7 @@ const Login = () => {
         </form>
 
         <p className={styles.switch}>
-          Don’t have an account? <a href="/register">Register</a>
+          Don’t have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

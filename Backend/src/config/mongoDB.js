@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { MongoClient } from 'mongodb';
-
-let client = new MongoClient("mongodb://127.0.0.1:27017");
+let url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
+let client = new MongoClient(url);
 let db;
 
 const mongoDBconnection = async()=>{
@@ -13,6 +13,7 @@ const mongoDBconnection = async()=>{
     }
     catch(err){
         console.log('Server Error', err)
+        process.exit(1); 
     }
 }
 

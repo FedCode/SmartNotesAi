@@ -1,10 +1,19 @@
 .main {
-  min-height: 80vh;
+  min-height: 83vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #0b1220;
+background-image:
+    radial-gradient(
+      ellipse 80% 60% at 20% 50%,
+      rgba(110, 64, 201, 0.35) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 80% 50%,
+      rgba(31, 111, 235, 0.30) 0%,
+      transparent 60%);
   color: #e5e7eb;
   text-align: center;
   padding: 20px;
@@ -13,7 +22,7 @@
 h1 {
   font-size: 48px;
   margin-bottom: 10px;
-  color: #3b82f6; /* blue heading */
+  color: #fff; /* blue heading */
 }
 
 p {
@@ -60,5 +69,5 @@ p {
 }
 
 .dashboard h2 {
-  color: #3b82f6;
+  color: #fff;
 }

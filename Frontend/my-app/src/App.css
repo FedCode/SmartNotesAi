@@ -19,11 +19,11 @@ Orange Hover: #ea580c
 }
 
 :root {
-  --bg:         #0b1220;
-  --bg-surface: #1a1a26;
-  --bg-card:    #1e1e2e;
-  --border:     #2a2a3e;
-  --border-dim: #232333;
+  --bg:         #0d1117;
+  --bg-surface: #161b22;
+  --bg-card:    #6e40c9;
+  --border:     #1f6feb;
+  --border-dim: #3fb950;
   --orange:     #EA4B26;
   --orange-dim: #c73f1f;
   --orange-glow:rgba(234,75,38,.18);
@@ -36,6 +36,11 @@ Orange Hover: #ea580c
   --font-mono:  'DM Mono', monospace;
   --header-h:   64px;
 }
+/* #0d1117 — Page background (near black)
+#161b22 — Elevated surface / canvas
+#6e40c9 — Purple glow (Copilot accent)
+#1f6feb — Blue glow (GitHub blue)
+#3fb950 — Green (success / open source accent) */
 
 html { scroll-behavior: smooth; }
 
@@ -224,6 +229,17 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
+   background-color: #0d1117;
+  background-image:
+    radial-gradient(
+      ellipse 80% 60% at 20% 50%,
+      rgba(110, 64, 201, 0.35) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 80% 50%,
+      rgba(31, 111, 235, 0.30) 0%,
+      transparent 60%)
 }
 
 /* Grid pattern */

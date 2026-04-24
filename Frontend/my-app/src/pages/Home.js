@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "../style/Home.module.css";
+import {Link} from 'react-router'
 
 const Home = () => {
   return (
@@ -12,8 +13,8 @@ const Home = () => {
         <p>Build powerful automation with ease using our platform.</p>
 
         <div className={styles.actions}>
-          <a href="/register" className={styles.primary}>Get Started</a>
-          <a href="/login" className={styles.secondary}>Login</a>
+          <Link to="/register" className={styles.primary}>Get Started</Link>
+          <Link to="/login" className={styles.secondary}>Login</Link>
         </div>
       </main>
 
