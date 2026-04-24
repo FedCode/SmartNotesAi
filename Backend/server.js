@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-   origin: ["http://localhost:3000"],
+   origin: "*",
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
    allowedHeaders: ["Content-Type", "Authorization"],
    credentials: true,
@@ -23,6 +23,9 @@ app.use(express.json());
 // Routers
 app.use("/api", userRouter)
 app.use("/api", taskRouter)
+app.get("/", (req, res) => {
+    res.send("SmartNotesAi API is active!");
+});
 // const PORT = process.env.PORT;
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, '0.0.0.0', ()=>{
