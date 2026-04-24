@@ -10,13 +10,14 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-   origin: "*",
+   origin: "https://smartnotesaifrontend.onrender.com",
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
    allowedHeaders: ["Content-Type", "Authorization"],
    credentials: true,
    optionsSuccessStatus: 200 
 }));
 
+app.options("*", cors());
 app.use(express.json());
 
 
