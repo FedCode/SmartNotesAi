@@ -15,7 +15,8 @@ app.use(cors({
    origin: "https://smartnotesaifrontend.onrender.com",
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
    allowedHeaders: ["Content-Type", "Authorization"],
-   credentials: true
+   credentials: true,
+   optionsSuccessStatus: 200
 }));
 app.options("*", cors());
 // app.options("*", cors());
