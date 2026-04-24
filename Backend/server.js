@@ -11,20 +11,48 @@ const app = express();
 
 
 
-const corsOptions = {
+// const corsOptions = {
+//    origin: "https://smartnotesaifrontend.onrender.com",
+//    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//    allowedHeaders: ["Content-Type", "Authorization"],
+//    credentials: true,
+//    optionsSuccessStatus: 200 
+// };
+
+// app.use(cors(corsOptions));
+
+// //app.options(':path*', cors(corsOptions));
+// // app.options(cors());
+// // app.options("*", cors());
+// app.use(express.json());
+app.use(cors({
    origin: "https://smartnotesaifrontend.onrender.com",
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
    allowedHeaders: ["Content-Type", "Authorization"],
-   credentials: true,
-   optionsSuccessStatus: 200 
-};
+   credentials: true
+}));
 
-app.use(cors(corsOptions));
+// 2. EXPLICIT OPTIONS HANDLER (Bypasses path-to-regexp)
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.header("Access-Control-Allow-Origin", "https://smartnotesaifrontend.onrender.com");
+        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+        res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        res.header("Access-Control-Allow-Credentials", "true");
+        return res.sendStatus(200);
+    }
+    next();
+});
 
-//app.options(':path*', cors(corsOptions));
-// app.options(cors());
-// app.options("*", cors());
 app.use(express.json());
+
+// ... Your API Routes here (e.g., app.use('/api/user', userRouter)) ...
+
+// 3. SAFE CATCH-ALL FOR FRONTEND (Only if you are serving HTML from here)
+// Using a literal regex instead of a string to avoid the parser error
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.send("Backend is running. If you see this, the server is healthy!");
+});
 
 
 // Routers
