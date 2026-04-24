@@ -9,15 +9,15 @@ dotenv.config();
 
 const app = express();
 
+
+
 app.use(cors({
    origin: "https://smartnotesaifrontend.onrender.com",
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
    allowedHeaders: ["Content-Type", "Authorization"],
-   credentials: true,
-   optionsSuccessStatus: 200 
+   credentials: true
 }));
-
-
+app.options("*", cors());
 // app.options("*", cors());
 app.use(express.json());
 
@@ -30,8 +30,13 @@ app.get("/", (req, res) => {
 });
 // const PORT = process.env.PORT;
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, '0.0.0.0', ()=>{
-console.log("Server is Runing on Port 3360")
-mongoDBconnection();
-})
 
+// app.listen(PORT, '0.0.0.0', ()=>{
+// console.log("Server is Runing on Port 3360")
+// mongoDBconnection();
+// })
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+    mongoDBconnection(); 
+});
