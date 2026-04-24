@@ -24,7 +24,7 @@ app.use(express.json());
 app.use("/api", userRouter)
 app.use("/api", taskRouter)
 // const PORT = process.env.PORT;
-const PORT = process.env.PORT || 3360;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, '0.0.0.0', ()=>{
 console.log("Server is Runing on Port 3360")
 mongoDBconnection();
