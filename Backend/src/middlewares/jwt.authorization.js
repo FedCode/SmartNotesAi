@@ -13,7 +13,7 @@ const jwtAuthorization =  async  (req, res, next)=>{
             });
         }
     const token = authHeader.split(' ')[1];
-    const payload = jwt.verify(token, process.env.jWT_SEC);
+    const payload = jwt.verify(token, process.env.JWT_SEC);
 
     req.userID = payload.id
 
