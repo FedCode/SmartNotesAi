@@ -33,6 +33,10 @@ app.get("/", (req, res) => {
 app.use("/api", userRouter);
 app.use("/api", taskRouter);
 
+app.use((req, res) => {
+  console.log(`404 - Route not found: ${req.method} ${req.url}`);
+  res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
+});
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, '0.0.0.0', () => {

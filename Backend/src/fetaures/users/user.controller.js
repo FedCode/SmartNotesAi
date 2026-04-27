@@ -6,7 +6,11 @@ import { getDB } from "../../config/mongoDB.js";
 
 export default class UserController{
     constructor(){
-        this.userReposistory = new UserReposistory()
+         this.userReposistory = new UserReposistory();
+
+    // Bind methods to preserve 'this'
+    this.userRegisterFun = this.userRegisterFun.bind(this);
+    this.loginUser = this.loginUser.bind(this);
     }
 async userRegisterFun(req, res){
     try{
@@ -34,6 +38,8 @@ async userRegisterFun(req, res){
      }
     catch(err){
         console.log("Error", err)
+          return res.status(500).json({ msg: "Internal server error", success: false }); // ✅ add this
+
     }
 }
 async loginUser(req, res){
@@ -63,6 +69,8 @@ async loginUser(req, res){
      }
     catch(err){
         console.log("Error", err)
+          return res.status(500).json({ msg: "Internal server error", success: false }); // ✅ add this
+
     }
 }
 
