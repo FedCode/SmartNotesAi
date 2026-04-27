@@ -9,11 +9,11 @@ const loginHandler =  async(e)=>{
        e.preventDefault();
 
   const formData = new FormData(e.currentTarget)
-  const data = Object.fromEntries(formData)
+  const data = Object.fromEntries(formData.entries())
 
   try{
-    const response =  await apiInstance.post('/user/login', data);
-    console.log("Response" . response.data)
+    const response = await apiInstance.post('/user/login', data);
+    console.log("Response", response.data)
     if(response.data){
       alert('Login SuccessFully !')
       navigate('/')
