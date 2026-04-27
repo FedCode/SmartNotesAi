@@ -32,11 +32,12 @@ const Register = () => {
         });
         //toast("Register Succesfully")
 
-        // Access token and user from response.data
-        console.log("Response Token:", response.data.token);
+      
         console.log("Response User:", response.data.user);
+      setTimeout(() => {
         navigate('/login');
-        // Optional: navigate('/login') after a short delay
+        
+    }, 1500); // 1.5 seconds
     } else {
         // Handle cases where the server returns 200 but success is false
         toast.error(response.data.message || "Registration failed");
@@ -48,25 +49,6 @@ const Register = () => {
     const errorMessage = err.response?.data?.message || "Something went wrong";
     toast.error(errorMessage);
 }
-      // try{
-      //     const response =  await apiInstance.post('/user/register', data);
-      //     if(response.data.success){
-      //          toast.success("Registered successfully!", {
-      //   icon: "🚀"
-      // });
-
-      // console.log("Reposne Token", response.token)
-      //  console.log("Reposne User", response.user)
-
-
-      // }
-      //  //toast.error("Registered failed!")
-      //     //navigate('/login');
-      // }
-      // catch(err){
-      //   console.log("Server Error", err)
-      //  // setError(err.response?.data?.message || "Something went wrong");
-      // }
    
    }
 
