@@ -2,11 +2,15 @@ import styles from "../style/Auth.module.css";
 import {Link} from 'react-router';
 import apiInstance from '../api/ApiInstance';
 import { useNavigate } from "react-router";
+
 const Login = () => {
-  const navigate = useNavigate()
+const navigate = useNavigate()
 const loginHandler =  async(e)=>{
+       e.preventDefault();
+
   const formData = new FormData(e.currentTarget)
   const data = Object.fromEntries(formData)
+
   try{
     const response = apiInstance.post('/user/login', data);
     console.log("Response" . response.data)
@@ -20,8 +24,6 @@ const loginHandler =  async(e)=>{
     console.log("Server Error", err)
   }
 }
-
-
 
   return (
     <div className={styles.container}>

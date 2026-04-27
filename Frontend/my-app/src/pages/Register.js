@@ -14,9 +14,8 @@ const Register = () => {
    const handleRegisterForm =  async (e)=>{
      e.preventDefault();
 
-     const formData = new FormData(e.currentTarget)
-
-     //using Desctrure
+       const formData = new FormData(e.currentTarget)
+  //using Desctrure
     // const email = formData.get('email');
     // const name = formData.get('name');
     // const password = formData.get('password');
