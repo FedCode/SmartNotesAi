@@ -1,12 +1,15 @@
 import { use, useState } from "react";
 import styles from "../style/Auth.module.css";
 import {Link} from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
 import apiInstance from '../api/ApiInstance';
 //import { useNavigate } from "react-router";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+  const navigate = useNavigate();
  //const [error, setError] = useState()
    const handleRegisterForm =  async (e)=>{
      e.preventDefault();
@@ -32,7 +35,7 @@ const Register = () => {
         // Access token and user from response.data
         console.log("Response Token:", response.data.token);
         console.log("Response User:", response.data.user);
-
+        navigate('/login');
         // Optional: navigate('/login') after a short delay
     } else {
         // Handle cases where the server returns 200 but success is false
