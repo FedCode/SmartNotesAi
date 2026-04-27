@@ -12,7 +12,7 @@ const loginHandler =  async(e)=>{
   const data = Object.fromEntries(formData)
 
   try{
-    const response = apiInstance.post('/user/login', data);
+    const response =  await apiInstance.post('/user/login', data);
     console.log("Response" . response.data)
     if(response.data){
       alert('Login SuccessFully !')
