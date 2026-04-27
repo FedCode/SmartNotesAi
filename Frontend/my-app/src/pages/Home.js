@@ -6,7 +6,7 @@ import {Link} from 'react-router'
 const Home = () => {
   return (
     <>
-      <Header />
+ 
 
       <main className={styles.main}>
         <h1>Automate Your Workflows</h1>
@@ -18,7 +18,7 @@ const Home = () => {
         </div>
       </main>
 
-      <Footer />
+
     </>
   );
 };
