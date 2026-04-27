@@ -6,9 +6,7 @@ import {Link} from 'react-router'
 const Home = () => {
   return (
     <>
- 
-
-      <main className={styles.main}>
+    <main className={styles.main}>
         <h1>Automate Your Workflows</h1>
         <p>Build powerful automation with ease using our platform.</p>
 

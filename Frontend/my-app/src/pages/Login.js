@@ -2,6 +2,7 @@ import styles from "../style/Auth.module.css";
 import {Link} from 'react-router';
 import apiInstance from '../api/ApiInstance';
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
 const navigate = useNavigate()
@@ -14,14 +15,17 @@ const loginHandler =  async(e)=>{
   try{
     const response = await apiInstance.post('/user/login', data);
     console.log("Response", response.data)
+    
     if(response.data){
-      alert('Login SuccessFully !')
-      navigate('/')
+      toast.success("Congratulation You Are Logged in")
+      localStorage.setItem('token', response.data.token)
+      navigate('/dashboard')
     }
     console.log('Login failed')
   }
   catch(err){
     console.log("Server Error", err)
+    toast.error("Error While login try again")
   }
 }
 
