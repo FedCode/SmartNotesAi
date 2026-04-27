@@ -9,7 +9,8 @@ const loginHandler =  async(e)=>{
   const data = Object.fromEntries(formData)
   try{
     const response = apiInstance.post('/user/login', data);
-    if(response.data && response.data.success){
+    console.log("Response" . response.data)
+    if(response.data){
       alert('Login SuccessFully !')
       navigate('/')
     }
