@@ -5,12 +5,20 @@ const apiInstance  = axios.create({
     //   headers: { 
     //     'Content-Type': 'application/json'
     //  },
-     withCredentials: true
+     withCredentials: true,
+     headers: {
+    'Content-Type': 'application/json',
+  }
+    
 })
 
 apiInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn("Session expired or unauthorized");
+      // You can trigger a global logout state here if needed
+    }
     return Promise.reject(error);
   }
 );
