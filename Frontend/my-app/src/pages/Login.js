@@ -101,7 +101,8 @@ const Login = () => {
     if (loading) return null; // Avoid flickering while checking session
 
     return (
-        <div className={styles.container}>
+      <div className={styles.container}>
+            <div className={styles.card}>
             <form className={styles.loginForm} onSubmit={loginHandler}>
                 <h2>Login to SmartNotesAI</h2>
                 
@@ -135,6 +136,7 @@ const Login = () => {
                     Don't have an account? <span onClick={() => navigate('/register')}>Register here</span>
                 </p>
             </form>
+            </div>
         </div>
     );
 };
