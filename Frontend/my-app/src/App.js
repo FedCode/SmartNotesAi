@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectRoute'
 function App() {
   return (
     <div className="App">
+      <authProvider>
       <Header />
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -21,6 +22,7 @@ function App() {
       </Routes>
       
        <Footer />
+       </authProvider>
     </div>
   );
 }
