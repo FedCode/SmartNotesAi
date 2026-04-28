@@ -108,8 +108,7 @@ const Login = () => {
             <form className={styles.form} onSubmit={loginHandler}>
     
                 
-                <div className={styles.inputGroup}>
-                    <label htmlFor="email">Email</label>
+            
                     <input 
                         type="email" 
                         id="email" 
@@ -117,10 +116,8 @@ const Login = () => {
                         required 
                         placeholder="your@email.com"
                     />
-                </div>
+           
 
-                <div className={styles.inputGroup}>
-                    <label htmlFor="password">Password</label>
                     <input 
                         type="password" 
                         id="password" 
@@ -128,7 +125,7 @@ const Login = () => {
                         required 
                         placeholder="••••••••"
                     />
-                </div>
+              
 
                 <button type="submit" className={styles.loginBtn}>
                     Login
