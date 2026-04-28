@@ -101,7 +101,7 @@ const Login = () => {
     if (loading) return null; // Avoid flickering while checking session
 
     return (
-        <div className={styles.loginContainer}>
+        <div className={styles.container}>
             <form className={styles.loginForm} onSubmit={loginHandler}>
                 <h2>Login to SmartNotesAI</h2>
                 
