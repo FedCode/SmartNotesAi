@@ -13,7 +13,7 @@ export const AuthProvider = ({children}) =>{
     useEffect(()=>{
      const checkSessionStatus = async ()=>{
         try{
-            const res = await apiInstance.get('/user/me',  { credentials: 'include' });
+            const res = await apiInstance.get('/user/me');
 
             if(res.data.loggedIn){
              setUser(res.data.user)

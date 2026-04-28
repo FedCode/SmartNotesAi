@@ -11,6 +11,7 @@ import mongoDBconnection from './src/config/mongoDB.js';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1);
 
 const corsOptions = {
   origin: "https://smartnotesaifrontend.onrender.com",
@@ -26,7 +27,7 @@ app.options(/(.*)/, cors(corsOptions));
 // 3. Body parser
 app.use(express.json());
 
-app.set('trust proxy', 1);
+
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

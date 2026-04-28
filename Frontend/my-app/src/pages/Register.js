@@ -39,13 +39,14 @@ const Register = () => {
     }, 1500); // 1.5 seconds
     } else {
         // Handle cases where the server returns 200 but success is false
-        toast.error(response.data.message || "Registration failed");
+        toast.error(response.data.msg || "Registration failed");
     }
 } catch (err) {
     console.log("Server Error", err);
     
     // Capture the actual error message from your backend
-    const errorMessage = err.response?.data?.message || "Something went wrong";
+  const errorMessage = err.response?.data?.msg || "Something went wrong";
+
     toast.error(errorMessage);
 }
    
