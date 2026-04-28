@@ -9,11 +9,11 @@ export const AuthProvider = ({children}) =>{
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     console.log("USER in AuthContext", user, loading)
-    
+
     useEffect(()=>{
      const checkSessionStatus = async ()=>{
         try{
-            const res = await apiInstance.get('/user/me');
+            const res = await apiInstance.get('/user/me',  { credentials: 'include' });
 
             if(res.data.loggedIn){
              setUser(res.data.user)
