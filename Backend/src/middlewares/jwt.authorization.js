@@ -26,7 +26,12 @@
 // }
 
 const jwtAuthorization =  (req, res, next)=>{
+    
      try{
+            console.log("=== JWT MIDDLEWARE ===");
+    console.log("Session ID:", req.sessionID);
+    console.log("Session data:", req.session);
+    console.log("Token in session:", req.session?.toke)
         //const token = req.session.token;
         const token = req.session?.token || req.headers.authorization?.split(" ")[1];
 

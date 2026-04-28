@@ -26,7 +26,22 @@ app.options(/(.*)/, cors(corsOptions));
 
 // 3. Body parser
 app.use(express.json());
+// ✅ Create store separately to monitor it
+const store = MongoStore.create({ 
+    mongoUrl: process.env.MONGODB_URI,
+    ttl: 60 * 60,           // 1 hour — matches cookie maxAge
+    autoRemove: 'native',
+    touchAfter: 24 * 3600   // only update session once per day
+});
 
+// ✅ Add error listener
+store.on('error', (err) => {
+    console.error("❌ MongoStore error:", err);
+});
+
+store.on('connected', () => {
+    console.log("✅ MongoStore connected successfully");
+});
 
 
 app.use(session({

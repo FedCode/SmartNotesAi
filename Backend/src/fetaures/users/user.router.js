@@ -23,7 +23,14 @@ userRouter.post('/user/logout', (req, res) => {
         if (err) {
             return res.status(500).json({ success: false, msg: "Logout failed" });
         }
-        res.clearCookie('connect.sid'); // The default name for express-session cookies
+        res.clearCookie('connect.sid',{
+                
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/'
+        });
+        // The default name for express-session cookies
         return res.status(200).json({ success: true, msg: "Logged out successfully" });
     });
 });
