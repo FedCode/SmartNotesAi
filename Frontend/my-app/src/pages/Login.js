@@ -103,8 +103,10 @@ const Login = () => {
     return (
       <div className={styles.container}>
             <div className={styles.card}>
-            <form className={styles.loginForm} onSubmit={loginHandler}>
                 <h2>Login to SmartNotesAI</h2>
+                <p className={styles.subtext}>Start your journey</p>
+            <form className={styles.form} onSubmit={loginHandler}>
+    
                 
                 <div className={styles.inputGroup}>
                     <label htmlFor="email">Email</label>
@@ -132,7 +134,7 @@ const Login = () => {
                     Login
                 </button>
 
-                <p className={styles.footerText}>
+                <p className={styles.switch}>
                     Don't have an account? <span onClick={() => navigate('/register')}>Register here</span>
                 </p>
             </form>
