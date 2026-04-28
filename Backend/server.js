@@ -2,6 +2,8 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
 import express from 'express';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import userRouter from './src/fetaures/users/user.router.js';
 import taskRouter from './src/fetaures/tasks/task.router.js';
 import mongoDBconnection from './src/config/mongoDB.js';
@@ -24,6 +26,23 @@ app.options(/(.*)/, cors(corsOptions));
 // 3. Body parser
 app.use(express.json());
 
+app.set('trust proxy', 1);
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: {
+    maxAge: 1 * 60 * 60 * 1000, // 5 Hours
+    httpOnly: true,
+    secure: true, // Required for 'none' or 'lax' on Render HTTPS
+    sameSite: 'none' // Required if your Frontend and Backend are on different Render domains
+  }
+}));
+
+
+
 // 4. Health check
 app.get("/", (req, res) => {
   res.send("SmartNotesAi API is active!");
@@ -32,6 +51,10 @@ app.get("/", (req, res) => {
 // 5. API Routes
 app.use("/api", userRouter);
 app.use("/api", taskRouter);
+
+
+
+
 
 app.use((req, res) => {
   console.log(`404 - Route not found: ${req.method} ${req.url}`);

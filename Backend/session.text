@@ -1,0 +1,21 @@
+npm install express-session connect-mongo
+
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+app.use(session({
+  // Use a strong secret from your .env file
+  secret: process.env.SESSION_SECRET || 'fallback_secret_key', 
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI, // Your MongoDB connection string
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    maxAge: 5 * 60 * 60 * 1000, // 5 hours in milliseconds
+    httpOnly: true,             // Extra security: hides cookie from JS
+    secure: process.env.NODE_ENV === 'production', // true for HTTPS (Render)
+    sameSite: 'lax'             // Essential for cross-site cookie handling
+  }
+}));

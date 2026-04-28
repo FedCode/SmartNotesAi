@@ -7,9 +7,8 @@ const Header = () => {
       <div className={styles.logo}>SmartNotesAI</div>
 
       <nav className={styles.nav}>
-        <Link to="/login">Login</Link>
-        <Link to="/register" className={styles.btn}>Register</Link>
-       {token && <Link to="/dashboard" className={styles.btn}>Dashboard</Link> } 
+        
+       {token ? (<Link to="/dashboard" className={styles.btn}>Dashboard</Link>):(<><Link to="/login">Login</Link><Link to="/register" className={styles.btn}>Register</Link></>) } 
       </nav>
     </header>
   );

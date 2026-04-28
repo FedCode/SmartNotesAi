@@ -460,3 +460,8 @@
   color: #e6edf3;
   border-color: #484f58;
 }
+.loadder{
+    display: "block";
+  margin: "0 auto";
+  border-color: "red";
+}

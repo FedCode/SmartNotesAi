@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { getDB } from "../../config/mongoDB.js"
 import bcrypt from 'bcrypt';
 export default class UserReposistory{
@@ -45,6 +46,22 @@ async userLogin(email, password){
         return { error: "SERVER_ERROR" };
 
     }
+}
+
+
+async userGetmeRepo(userID){
+ try{
+        const db = getDB();
+        const collection = await db.collection('users');
+        const userMatch = await collection.findOne(
+            { _id: new ObjectId(userID) }, 
+            { projection: { password: 0 } } // not include this field in data
+        );
+        return userMatch
+ }
+ catch(err){
+     console.log("Server Error", err)
+ }
 }
 
 }

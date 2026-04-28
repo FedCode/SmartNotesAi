@@ -65,7 +65,9 @@ async loginUser(req, res){
           process.env.JWT_SEC,{
              expiresIn: "1h"
         })
-       return res.status(200).json({msg:'User Login Sucessfully', user:user, token:token, success:true})  
+        // Then store that token inside the session
+        req.session.token = token;
+       return res.status(200).json({msg:'User Login Sucessfully', user:user,  success:true})  
      }
     catch(err){
         console.log("Error", err)
@@ -74,4 +76,37 @@ async loginUser(req, res){
     }
 }
 
+
+async userGetMe(req, res){
+    try{
+        const userID = req.userID
+
+        if (!userId) {
+                return res.status(401).json({ success: false, msg: "Unauthorized" });
+            }
+
+         const user = await this.userRepository.userGetmeRepo(userId);  
+
+         if (!user) {
+                return res.status(404).json({ 
+                    success: false, 
+                    loggedIn: false, 
+                    msg: "User not found" 
+                });
+            }
+
+            // 3. Return success to React
+            // We return loggedIn: true so the frontend knows the session is active
+            res.status(200).json({ 
+                success: true, 
+                loggedIn: true, 
+                user 
+            });
+
+    }
+    catch(err){
+        console.error("Controller Error in getMe:", err);
+        res.status(500).json({ success: false, msg: "Internal Server Error" });
+    }
+}
 }
