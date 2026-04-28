@@ -1,14 +1,25 @@
 import styles from '../style/Header.module.css';
 import {Link} from 'react-router';
+import { useAuth } from '../context/AuthContext';
 const Header = () => {
-  const token  = localStorage.getItem('token')
+const { user, logout } = useAuth();
   return (
     <header className={styles.header}>
       <div className={styles.logo}>SmartNotesAI</div>
 
       <nav className={styles.nav}>
         
-       {token ? (<Link to="/dashboard" className={styles.btn}>Dashboard</Link>):(<><Link to="/login">Login</Link><Link to="/register" className={styles.btn}>Register</Link></>) } 
+       {user ? (
+          <>
+            <Link to="/dashboard" className={styles.navLink}>Dashboard</Link>
+            <button onClick={logout} className={styles.logoutBtn}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className={styles.navLink}>Login</Link>
+            <Link to="/register" className={styles.btn}>Register</Link>
+          </>
+        ) } 
       </nav>
     </header>
   );
