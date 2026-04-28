@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) =>{
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    console.log("USER in AuthContext", user, loading)
     useEffect(()=>{
      const checkSessionStatus = async ()=>{
         try{

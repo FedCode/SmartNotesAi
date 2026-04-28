@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import { useAuthContext } from '../context/AuthContext';
 const Header = () => {
 const { user, logout } = useAuthContext();
+console.log("USER IN Header", user, logout)
   return (
     <header className={styles.header}>
       <div className={styles.logo}>SmartNotesAI</div>
