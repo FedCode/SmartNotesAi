@@ -13,7 +13,7 @@ console.log("USER IN Header", user, logout)
        {user ? (
           <>
             <Link to="/dashboard" className={styles.navLink}>Dashboard</Link>
-            <button onClick={logout} className={styles.logoutBtn}>Logout</button>
+            <button onClick={logout} className={styles.btn}>Logout</button>
           </>
         ) : (
           <>

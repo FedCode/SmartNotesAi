@@ -27,7 +27,8 @@
 
 const jwtAuthorization =  (req, res, next)=>{
      try{
-        const token = req.session.token;
+        //const token = req.session.token;
+        const token = req.session?.token || req.headers.authorization?.split(" ")[1];
 
         if(!token){
             return res.status(401).json({msg:'No Session found. Please login again.', success: false})

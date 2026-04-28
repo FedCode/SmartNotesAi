@@ -1,5 +1,6 @@
 import styles from "../style/Dashboard.module.css";
 import{useAuthContext} from '../context/AuthContext'
+import { use } from "react";
 
 const tasks = [
   {
@@ -40,6 +41,7 @@ const tasks = [
 
 export default function UserDashboard({children}) {
  const {user, loadding} = useAuthContext();
+ console.log("User in Dashborad", user)
   return (
     <div className={styles.wrapper}>
       <div className={styles.dashboard}>
