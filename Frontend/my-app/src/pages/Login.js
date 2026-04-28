@@ -58,9 +58,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
-import { toast } from "react-toastify";
 import styles from "../style/Auth.module.css";
 import {Link} from 'react-router';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Adjust path to your CSS
 
 const Login = () => {
@@ -104,7 +105,9 @@ const Login = () => {
       <div className={styles.container}>
             <div className={styles.card}>
                 <h2>Login to SmartNotesAI</h2>
-                <p className={styles.subtext}>Start your journey</p>
+               <p className={styles.subtext}>Start your journey</p>
+                
+                   <ToastContainer />
             <form className={styles.form} onSubmit={loginHandler}>
     
                 
@@ -127,7 +130,7 @@ const Login = () => {
                     />
               
 
-                <button type="submit" className={styles.loginBtn}>
+                <button type="submit" className={styles.primaryBtn}>
                     Login
                 </button>
 
