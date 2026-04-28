@@ -22,7 +22,7 @@ const Register = () => {
     ///const {name, email, password} = formData;
     const data = Object.fromEntries(formData.entries());
     try {
-    const response = await apiInstance.post('/user/register', data);
+    const response = await apiInstance.post('/user/register', data, { withCredentials: true });
 
     // FIX: Access the 'data' property from the Axios response
     if (response.data && response.data.success) {
