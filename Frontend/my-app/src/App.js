@@ -8,11 +8,12 @@ import Login from '../src/pages/Login';
 import Dashboard from '../src/pages/Dashboard';
 import {Routes, Route} from 'react-router';
 import ProtectedRoute from './components/ProtectRoute'
+import {AuthProvider} from './context/AuthContext'
 
 function App() {
   return (
     <div className="App">
-      <authProvider>
+      <AuthProvider>
       <Header />
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -22,7 +23,7 @@ function App() {
       </Routes>
       
        <Footer />
-       </authProvider>
+       </AuthProvider>
     </div>
   );
 }
