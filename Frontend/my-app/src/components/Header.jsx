@@ -1,8 +1,8 @@
 import styles from '../style/Header.module.css';
 import {Link} from 'react-router';
-import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 const Header = () => {
-const { user, logout } = useAuth();
+const { user, logout } = useAuthContext();
   return (
     <header className={styles.header}>
       <div className={styles.logo}>SmartNotesAI</div>
