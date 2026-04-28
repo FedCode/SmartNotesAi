@@ -2,12 +2,12 @@ import { Children, createContext, useContext, useEffect, useState } from "react"
 import apiInstance from "../api/ApiInstance";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext({Children});
+const AuthContext = createContext(null);
 
-export const AuthProvider = () =>{
+export const AuthProvider = ({children}) =>{
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
-    const [loadding, setLoadding] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
      const checkSessionStatus = async ()=>{
@@ -40,7 +40,7 @@ export const AuthProvider = () =>{
   };
 
   return(
-    <AuthContext.Provider value={{user, loadding, login, logout}}>
+    <AuthContext.Provider value={{user, loading, login, logout}}>
     {!loading && children}
     </AuthContext.Provider>
   )
