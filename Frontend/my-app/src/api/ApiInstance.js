@@ -11,11 +11,6 @@ const apiInstance  = axios.create({
 apiInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // If the 5-hour session expires, the server sends 401
-      // Clear your local user state and redirect
-      window.location.href = '/login';
-    }
     return Promise.reject(error);
   }
 );

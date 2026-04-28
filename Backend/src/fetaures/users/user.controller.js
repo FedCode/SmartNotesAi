@@ -81,11 +81,11 @@ async userGetMe(req, res){
     try{
         const userID = req.userID
 
-        if (!userId) {
+        if (!userID) {
                 return res.status(401).json({ success: false, msg: "Unauthorized" });
             }
 
-         const user = await this.userRepository.userGetmeRepo(userId);  
+         const user = await this.userRepository.userGetmeRepo(userID);  
 
          if (!user) {
                 return res.status(404).json({ 
