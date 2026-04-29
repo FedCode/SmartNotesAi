@@ -11,25 +11,30 @@ async createTask(taskData, userID){
         try{
             const db = getDB();
            const collection = db.collection('tasks')
+           // 1. Manually create the specific entry we are pushing
+        // This ensures we can return the DATA, not just the "Success" message
+        const newTaskEntry = {
+            tasks: { ...taskData }, // title, content, category, priority
+            taskID: new ObjectId(),
+            userID: userID,
+            createdAt: new Date()
+        };
            // const taskCreated =  await db.collection(this.taskCollection).insertOne({  userID:userID,tasks:{...taskData}, createdAt:new Date(), updatedAt:new Date() }); 
             //Cereate A task using
+
             const filter = {userID:new ObjectId(userID)}
             const update = {
-                $push:{tasks:{
-                    ...taskData,
-                    taskID:new ObjectId(),
-                    createdAt: new Date()
-                }},
+                $push:{tasks:newTaskEntry},
                 $set: { updatedAt: new Date() }
             }
             const taskCreated =  await collection.updateOne(filter, update, {upsert:true});
             //const taskCreated =  await db.collection(this.taskCollection).insertOne({  userID:userID,tasks:{...taskData}, createdAt:new Date(), updatedAt:new Date() }); 
+            if (taskCreated.acknowledged) {
+                 return newTaskEntry; // Return the actual data created
+              }
 
-
-            if(!taskCreated){
-                return {error:"Task is Not inserted"}
-            }
-            return {task:taskCreated}
+            
+           return { error: "Task not inserted" };
             
         }
         catch(err){

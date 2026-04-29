@@ -112,39 +112,35 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-          {tasks.map((item, index) => {
-                      const { title, content, category, priority } = item.tasks || {};
+     {tasks.map((item, index) => {
+    // Destructure from the inner 'tasks' object
+    // item.tasks contains: title, content, category, priority
+    const { title, content, category, priority } = item.tasks || {};
 
-            return(
-                <div className={styles.taskCard} key={index}>
-            <div className={`${styles.taskCheck} ${item.done ? styles.taskCheckDone : ""}`}>
-              {item.done && <div className={styles.checkmark} />}
-            </div>
+    return (
+        <div className={styles.taskCard} key={item.taskID || index}>
             <div className={styles.taskBody}>
-              <div className={`${styles.taskTitle} ${item.done ? styles.taskTitleDone : ""}`}>
-                {/* Access title via item.tasks.title */}
-                {title}
-              </div>
-              {/* Access content and category via item.tasks */}
-              <div className={styles.taskContent}>{content}</div>
-              <div className={styles.taskMeta}>
-                <span className={`${styles.badge} ${styles.badgeCat}`}>
-                  {category}
-                </span>
-                <span className={`${styles.badge} ${priority}`}>
-                  {priority}
-                </span>
-              </div>
+                <div className={styles.taskTitle}>
+                    {title || "Untitled Task"}
+                </div>
+                <div className={styles.taskContent}>
+                    {content}
+                </div>
+                <div className={styles.taskMeta}>
+                    <span className={styles.badgeCat}>{category}</span>
+                    <span className={`${styles.badge} ${priority}`}>
+                        {priority}
+                    </span>
+                </div>
             </div>
             <div className={styles.taskActions}>
-              <button className={styles.iconBtn}>✎</button>
-              <button className={`${styles.iconBtn} ${styles.iconBtnDelete}`}>✕</button>
+                <button className={styles.iconBtn}>✎</button>
+                <button className={styles.iconBtnDelete}>✕</button>
             </div>
-          </div>
-            )
-          }
-        
-        )}
+        </div>
+    );
+})}
+     
           </div>
 
           {/* Form panel */}
