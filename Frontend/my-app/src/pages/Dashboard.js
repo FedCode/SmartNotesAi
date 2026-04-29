@@ -112,34 +112,36 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-  {tasks.map((item, index) => {
-    // 1. Now that you used ...taskData in the backend, 
-    // title, content, etc., are direct properties of item.
-    const { title, content, category, priority } = item.tasks || {};
+{console.log("tasks state:", tasks),
+console.log("first item:", tasks[0]),
+console.log("first item.tasks:", tasks[0]?.tasks),
 
-    return (
-        <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
-            <div className={styles.taskBody}>
-                <div className={styles.taskTitle}>
-                    {/* 2. This will now find 'title' directly */}
-                    {title || "Untitled Task"}
-                </div>
-                <div className={styles.taskContent}>
-                    {content}
-                </div>
-                <div className={styles.badgeRow}>
-                    <span className={styles.badgeCat}>{category}</span>
-                    <span className={`${styles.badge} ${priority}`}>
-                        {priority}
-                    </span>
-                </div>
-            </div>
-            <div className={styles.taskActions}>
-                <button className={styles.iconBtn}>✎</button>
-                <button className={styles.iconBtnDelete}>✕</button>
-            </div>
+tasks.map((item, index) => {
+  // item.tasks is the nested object { title, content, category, priority }
+  const { title, content, category, priority } = item.tasks || {};
+
+  return (
+    <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
+      <div className={styles.taskBody}>
+        <div className={styles.taskTitle}>
+          {title || "Untitled Task"}
         </div>
-    );
+        <div className={styles.taskContent}>
+          {content}
+        </div>
+        <div className={styles.badgeRow}>
+          <span className={styles.badgeCat}>{category}</span>
+          <span className={`${styles.badge} ${styles[priority?.toLowerCase()]}`}>
+            {priority}
+          </span>
+        </div>
+      </div>
+      <div className={styles.taskActions}>
+        <button className={styles.iconBtn}>✎</button>
+        <button className={styles.iconBtnDelete}>✕</button>
+      </div>
+    </div>
+  );
 })}
      
           </div>

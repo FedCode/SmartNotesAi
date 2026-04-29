@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) =>{
      }
       checkSessionStatus()   
 
-
+console.log("tasks updated:", tasks);
  
 
     }, [])
@@ -46,17 +46,13 @@ export const AuthProvider = ({children}) =>{
     //     } 
     // }  
     const createTask = async(taskData)=>{
-      // 1. Prevent the crash by checking if user exists
-    // if (!user || !user._id) {
-    //     console.error("No user found. Please log in.");
-    //     return;
-    // }
+    
         try{
         
           const response = await apiInstance.post(`/task/create`, {userID:user._id, tasks:taskData}, {withCredentials:true})
           const data = response.data
           if(data.sucess){
-          setTasks((prevTasks)=> [...prevTasks, data])
+          setTasks((prevTasks)=> [...prevTasks, data.task])
           console.log("task create Sucessfully TaskList", tasks)
           }
          
