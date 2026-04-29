@@ -14,11 +14,11 @@ async createTaskCont(req, res){
        if(!newTask){
         
 
-        return res.status(400).json({msg:'Task not added', sucess:false})
+        return res.status(400).json({msg:'Task not added', success:false})
 
        }
 
-        return res.status(201).json({ sucess:true, msg:"Task created Easily", task:newTask })
+        return res.status(201).json({ success:true, msg:"Task created Easily", task:newTask })
     }
     catch(err){
         console.log("Server Error", err)
@@ -34,9 +34,9 @@ async getAllTask(req, res){
 
    if(alltask.error){
      const statusCode  = statusCode.error === "Task Not Found" ? 400:500;
-     return res.status(statusCode).json({msg:alltask.error, sucess:false})
+     return res.status(statusCode).json({msg:alltask.error, success:false})
    }
-   return res.status(200).json({ sucess:true, msg:"All Task Getched Easily", task:alltask })
+   return res.status(200).json({ success:true, msg:"All Task Getched Easily", task:alltask })
 
   }
   catch(err){
@@ -54,9 +54,9 @@ async updateTasks(req, res){
     const editTasks =  await this.taskRepo.editTaskByID(userID,taskID, req.body)
    if(editTasks.error)  {
      const statusCode  = statusCode.error === "Task Not Found" ? 400:500;
-     return res.status(statusCode).json({msg:alltask.error, sucess:false})
+     return res.status(statusCode).json({msg:alltask.error, success:false})
    }
-  return res.status(200).json({ sucess:true, msg:"Task is Updated Sucessfully", task:editTasks })
+  return res.status(200).json({ success:true, msg:"Task is Updated Sucessfully", task:editTasks })
   }
   catch(err){
     console.log("Server Error", err)
@@ -73,7 +73,7 @@ async deleteUserTask(req, res){
     if(result.error){
       const statusCode = statusCode.error === "Task not delete" ? 400:500
     }
-    return res.status(200).json({ sucess:true, msg:"Task is Deleted Sucessfully", task:result.modifiedCount })
+    return res.status(200).json({ success:true, msg:"Task is Deleted Sucessfully", task:result.modifiedCount })
 
   }
   catch(err){

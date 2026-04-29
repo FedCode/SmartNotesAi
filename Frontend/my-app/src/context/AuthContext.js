@@ -19,8 +19,9 @@ export const AuthProvider = ({children}) =>{
             if(res.data.loggedIn){
              setUser(res.data.user)
              const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`, {withCredentials:true});
-             if(taskRes.data.sucess){
+             if(taskRes.data.success){
                setTasks(taskRes.data.tasks)
+                console.log("Tasks response From Backend:", taskRes.data); 
              }
             }
         }
@@ -53,9 +54,9 @@ export const AuthProvider = ({children}) =>{
         
           const response = await apiInstance.post(`/task/create`, {userID:user._id, tasks:taskData}, {withCredentials:true})
           const data = response.data
-          if(data.sucess){
+          if(data.success){
           setTasks((prevTasks) => [...(prevTasks || []), data.task])
-          
+           
           }
          
        
