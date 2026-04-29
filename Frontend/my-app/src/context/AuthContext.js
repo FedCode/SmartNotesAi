@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) =>{
              const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`, {withCredentials:true});
              console.log("UseeEfefct on DashbPOrad",taskRes)
              if(taskRes.data.success){
-               setTasks(taskRes.data.tasks)
+               setTasks(taskRes.data.task.taskList)
                 console.log("Tasks response From Backend:", taskRes.data); 
              }
             }
