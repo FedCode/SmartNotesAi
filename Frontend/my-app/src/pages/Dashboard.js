@@ -112,9 +112,7 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-{console.log("tasks state:", tasks),
-console.log("first item:", tasks[0]),
-console.log("first item.tasks:", tasks[0]?.tasks),
+{
 
 tasks.map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
@@ -137,9 +135,9 @@ tasks.map((item, index) => {
         </div>
       </div>
       <div className={styles.taskActions}>
-        <button className={styles.iconBtn}>✎</button>
-        <button className={styles.iconBtnDelete}>✕</button>
-      </div>
+              <button className={styles.iconBtn}>✎</button>
+              <button className={`${styles.iconBtn} ${styles.iconBtnDelete}`}>✕</button>
+            </div>
     </div>
   );
 })}

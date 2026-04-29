@@ -18,6 +18,11 @@ export const AuthProvider = ({children}) =>{
 
             if(res.data.loggedIn){
              setUser(res.data.user)
+
+             const taskRes = await apiInstance.get(`/tasks/:${res.data.user._id}`);
+             if(taskRes.data.sucess){
+               setTasks(taskRes.data.tasks)
+             }
             }
         }
         catch(err){
@@ -28,9 +33,7 @@ export const AuthProvider = ({children}) =>{
      }
       checkSessionStatus()   
 
-console.log("tasks updated:", tasks);
  
-
     }, [])
     // Get User Data 
     // const getDataByUserID = async()=>{
@@ -53,7 +56,7 @@ console.log("tasks updated:", tasks);
           const data = response.data
           if(data.sucess){
           setTasks((prevTasks)=> [...prevTasks, data.task])
-          console.log("task create Sucessfully TaskList", tasks)
+          
           }
          
        
