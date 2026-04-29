@@ -59,7 +59,6 @@ export default function UserDashboard({children}) {
     console.log("Failed to create task", err);
   }
  }
- console.log("Task List in Dashboard Componet", tasks.tasks)
  
   return (
     <div className={styles.wrapper}>
