@@ -46,6 +46,11 @@ createTask()
     //     } 
     // }  
     const createTask = async(taskData)=>{
+      // 1. Prevent the crash by checking if user exists
+    if (!user || !user._id) {
+        console.error("No user found. Please log in.");
+        return;
+    }
         try{
         
           const response = await apiInstance.post(`/task/create`, {userID:user._id, tasks:taskData}, {withCredentials:true})

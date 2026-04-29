@@ -110,11 +110,11 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-          {tasks.map((item) => {
+          {tasks.map((item, index) => {
                       const { title, content, category, priority } = item.tasks || {};
 
             return(
-                <div className={styles.taskCard} key={item.taskID.$oid}>
+                <div className={styles.taskCard} key={index}>
             <div className={`${styles.taskCheck} ${item.done ? styles.taskCheckDone : ""}`}>
               {item.done && <div className={styles.checkmark} />}
             </div>
