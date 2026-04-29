@@ -49,12 +49,13 @@ async createTask(taskData, userID){
         try{
             const db = getDB();
             const collection  = await db.collection('tasks');
-            const findCollections = await collection.find({userID:userID}).toArray();
-
+            const findCollections = await collection.findOne({userID:new ObjectId(userID)})
+            console.log("Query userID:", userID);
+            console.log("Found tasks:", findCollections);
             if(!findCollections){
-                 return {error:"Task is Not Found"}
+                 return {taskList: []}
             }
-            return {taskList:findCollections}
+        return { taskList: findCollections.tasks || [] }
         }
         catch(err){
             console.log("Server Error", err)
