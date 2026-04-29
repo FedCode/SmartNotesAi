@@ -54,7 +54,7 @@ export const AuthProvider = ({children}) =>{
           const response = await apiInstance.post(`/task/create`, {userID:user._id, tasks:taskData}, {withCredentials:true})
           const data = response.data
           if(data.sucess){
-          setTasks((prevTasks)=> [...prevTasks, data.task])
+          setTasks((prevTasks) => [...(prevTasks || []), data.task])
           
           }
          
