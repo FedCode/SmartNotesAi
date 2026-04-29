@@ -14,11 +14,11 @@ export const AuthProvider = ({children}) =>{
     useEffect(()=>{
      const checkSessionStatus = async ()=>{
         try{
-            const res = await apiInstance.get('/user/me');
+            const res = await apiInstance.get('/user/me', {withCredentials:true});
 
             if(res.data.loggedIn){
              setUser(res.data.user)
-             const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`);
+             const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`, {withCredentials:true});
              if(taskRes.data.sucess){
                setTasks(taskRes.data.tasks)
              }
