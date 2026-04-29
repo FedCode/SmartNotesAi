@@ -27,13 +27,17 @@
 
 const jwtAuthorization =  (req, res, next)=>{
     
-     try{
-            console.log("=== JWT MIDDLEWARE ===");
-    console.log("Session ID:", req.sessionID);
-    console.log("Session data:", req.session);
-    console.log("Token in session:", req.session?.toke)
+     
+   
 
         //const token = req.session.token;
+        res.header("Access-Control-Allow-Origin", "https://smartnotesaifrontend.onrender.com");
+        res.header("Access-Control-Allow-Credentials", "true");
+
+
+            console.log("🔐 Session:", req.session);
+            console.log("🔑 Token:", req.session?.token);
+
         const token = req.session?.token || req.headers.authorization?.split(" ")[1];
 
         if(!token){
@@ -42,7 +46,7 @@ const jwtAuthorization =  (req, res, next)=>{
 
         // 2. Verify using your JWT Secret
         // Note: Make sure process.env.JWT_SEC matches your .env key name
-        const payload = jwt.verify(token, process.env.JWT_SEC)
+       try{ const payload = jwt.verify(token, process.env.JWT_SEC)
 
         // 3. Attach the ID to the request object for the next routes
          req.userID = payload.id

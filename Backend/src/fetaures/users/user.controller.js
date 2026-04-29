@@ -78,13 +78,9 @@ async loginUser(req, res){
             return res.status(200).json({ msg: 'User Login Successfully', user, success: true });
         });
         
-        console.log("=== LOGIN ===");
-        console.log("Session after login:", req.session);
-        console.log("Session ID:", req.sessionID);
 
 
 
-       return res.status(200).json({msg:'User Login Sucessfully', user:user,  success:true})  
      }
     catch(err){
         console.log("Error", err)
