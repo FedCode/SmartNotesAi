@@ -42,11 +42,9 @@ const Register = () => {
         toast.error(response.data.msg || "Registration failed");
     }
 } catch (err) {
-    console.log("Server Error", err);
-    
+    console.log("Server Error", err);   
     // Capture the actual error message from your backend
   const errorMessage = err.response?.data?.msg || "Something went wrong";
-
     toast.error(errorMessage);
 }
    

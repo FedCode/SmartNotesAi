@@ -40,7 +40,7 @@ const tasks = [
 
 export default function UserDashboard({children}) {
  const {user, loading} = useAuthContext();
- console.log("User in Dashborad", user)
+ console.log("User in Dashborad", user.name[0], user?.name?.charAt(0))
   return (
     <div className={styles.wrapper}>
       <div className={styles.dashboard}>
