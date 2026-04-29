@@ -115,7 +115,7 @@ export default function UserDashboard({children}) {
   {tasks.map((item, index) => {
     // 1. Now that you used ...taskData in the backend, 
     // title, content, etc., are direct properties of item.
-    const { title, content, category, priority } = item || {};
+    const { title, content, category, priority } = item.tasks || {};
 
     return (
         <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
