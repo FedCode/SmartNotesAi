@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const apiInstance  = axios.create({
-    baseURL:"https://smartnotesai-7ifv.onrender.com/api",
+    baseURL:baseURL,
     //   headers: { 
     //     'Content-Type': 'application/json'
     //  },

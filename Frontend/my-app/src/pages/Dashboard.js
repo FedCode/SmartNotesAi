@@ -43,6 +43,7 @@ export default function UserDashboard({children}) {
  const {user, loading, createTask, tasks} = useAuthContext();
 
 
+
  const handleSubmit = async (e)=>{
   e.preventDefault();
   const form = e.currentTarget;
@@ -77,7 +78,7 @@ export default function UserDashboard({children}) {
         <div className={styles.stats}>
           <div className={styles.stat}>
             <div className={styles.statLabel}>Total tasks</div>
-            <div className={styles.statVal}>4</div>
+            <div className={styles.statVal}>{(tasks || []).map((item, index) => item.tasks.length)}</div>
           </div>
           <div className={styles.stat}>
             <div className={styles.statLabel}>Completed</div>

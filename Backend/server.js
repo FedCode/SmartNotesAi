@@ -8,14 +8,23 @@ import userRouter from './src/fetaures/users/user.router.js';
 import taskRouter from './src/fetaures/tasks/task.router.js';
 import mongoDBconnection from './src/config/mongoDB.js';
 
-dotenv.config();
 
+dotenv.config({
+  path: process.env.NODE_ENV === 'production' 
+    ? '.env.production' 
+    : '.env.development'
+});
 const app = express();
 app.set('trust proxy', 1);
 
 
+
 const corsOptions = {
-  origin: "https://smartnotesaifrontend.onrender.com",
+  origin: [
+        "https://smartnotesaifrontend.onrender.com", 
+        "http://localhost:3000",
+        "http://192.168.18.150:3000"
+      ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
@@ -54,8 +63,10 @@ app.use(session({
   cookie: {
     maxAge: 1 * 60 * 60 * 1000, // 5 Hours
     httpOnly: true,
-    secure: true, // Required for 'none' or 'lax' on Render HTTPS
-    sameSite: 'none' // Required if your Frontend and Backend are on different Render domains
+    // secure: true, // Required for 'none' or 'lax' on Render HTTPS
+    // sameSite: 'none' // Required if your Frontend and Backend are on different Render domains
+    secure: process.env.NODE_ENV === 'production',  // ✅ false locally, true on Render
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'  // ✅ lax locally
   }
 }));
 
