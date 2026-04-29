@@ -71,7 +71,7 @@ export default function UserDashboard({children}) {
             <h1>My Dashboard</h1>
             {/* <span>{dateStr}</span> */}
           </div>
-          <div className={styles.avatar}>{user.name[0]}</div>
+          <div className={styles.avatar}>{user.name[0].toUpperCase()}</div>
         </div>
 
         {/* Stats */}
@@ -113,24 +113,31 @@ export default function UserDashboard({children}) {
             </div>
 
   {tasks.map((item, index) => {
-    // Look at your log: the data is at item.tasks.tasks.title
-    // We destructure 'tasks' from 'item', then title/content from that
-    const innerTasks = item.tasks?.tasks || item.tasks || {};
-    const { title, content, category, priority } = innerTasks;
+    // 1. Now that you used ...taskData in the backend, 
+    // title, content, etc., are direct properties of item.
+    const { title, content, category, priority } = item || {};
 
     return (
         <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
             <div className={styles.taskBody}>
                 <div className={styles.taskTitle}>
+                    {/* 2. This will now find 'title' directly */}
                     {title || "Untitled Task"}
                 </div>
-                <div className={styles.taskContent}>{content}</div>
-                <div className={styles.taskMeta}>
+                <div className={styles.taskContent}>
+                    {content}
+                </div>
+                <div className={styles.badgeRow}>
                     <span className={styles.badgeCat}>{category}</span>
-                    <span className={`${styles.badge} ${priority}`}>{priority}</span>
+                    <span className={`${styles.badge} ${priority}`}>
+                        {priority}
+                    </span>
                 </div>
             </div>
-            {/* ... rest of your buttons */}
+            <div className={styles.taskActions}>
+                <button className={styles.iconBtn}>✎</button>
+                <button className={styles.iconBtnDelete}>✕</button>
+            </div>
         </div>
     );
 })}

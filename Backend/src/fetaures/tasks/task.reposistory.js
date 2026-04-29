@@ -14,7 +14,7 @@ async createTask(taskData, userID){
            // 1. Manually create the specific entry we are pushing
         // This ensures we can return the DATA, not just the "Success" message
         const newTaskEntry = {
-            tasks: { ...taskData }, // title, content, category, priority
+            ...taskData , // title, content, category, priority
             taskID: new ObjectId(),
             userID: userID,
             createdAt: new Date()
