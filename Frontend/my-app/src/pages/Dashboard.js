@@ -59,7 +59,7 @@ export default function UserDashboard({children}) {
     console.log("Failed to create task", err);
   }
  }
- 
+   if(loading || !user) return null;
   return (
     <div className={styles.wrapper}>
       <div className={styles.dashboard}>
@@ -111,7 +111,7 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-{tasks.map((item, index) => {
+{(tasks || []).map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
   const { title, content, category, priority } = item.tasks || {};
 
