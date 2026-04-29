@@ -13,6 +13,7 @@ dotenv.config();
 const app = express();
 app.set('trust proxy', 1);
 
+
 const corsOptions = {
   origin: "https://smartnotesaifrontend.onrender.com",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -22,7 +23,8 @@ const corsOptions = {
 // 1. CORS middleware
 app.use(cors(corsOptions));
 // 2. Preflight - Express 5 compatible
-app.options(/(.*)/, cors(corsOptions));
+app.options(/(.*)/, cors(corsOptions)); // ✅ preflight
+
 
 // 3. Body parser
 app.use(express.json());
@@ -48,7 +50,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  store: store,
   cookie: {
     maxAge: 1 * 60 * 60 * 1000, // 5 Hours
     httpOnly: true,
@@ -69,13 +71,12 @@ app.use("/api", userRouter);
 app.use("/api", taskRouter);
 
 
-
-
-
+// 6. 404 — MUST be last
 app.use((req, res) => {
-  console.log(`404 - Route not found: ${req.method} ${req.url}`);
   res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
 });
+
+
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, '0.0.0.0', () => {
