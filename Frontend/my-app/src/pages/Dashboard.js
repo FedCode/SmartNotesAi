@@ -118,7 +118,7 @@ export default function UserDashboard({children}) {
                 </div>
                 <div className={styles.taskBody}>
                   <div className={`${styles.taskTitle} ${task.done ? styles.taskTitleDone : ""}`}>
-                    {task.tasks.tasks.title}
+                    {task.tasks.title}
                   </div>
                   <div className={styles.taskContent}>{task.content}</div>
                   <div className={styles.taskMeta}>
