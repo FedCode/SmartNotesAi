@@ -27,7 +27,7 @@ export const AuthProvider = ({children}) =>{
       }
      }
       checkSessionStatus()   
-createTask()
+
 
  
 
@@ -47,10 +47,10 @@ createTask()
     // }  
     const createTask = async(taskData)=>{
       // 1. Prevent the crash by checking if user exists
-    if (!user || !user._id) {
-        console.error("No user found. Please log in.");
-        return;
-    }
+    // if (!user || !user._id) {
+    //     console.error("No user found. Please log in.");
+    //     return;
+    // }
         try{
         
           const response = await apiInstance.post(`/task/create`, {userID:user._id, tasks:taskData}, {withCredentials:true})
@@ -75,7 +75,10 @@ createTask()
     setUser(null);
     navigate('/login')
   };
-
+ 
+  // if(loading){
+  //   return <div>.....Loadding</div>
+  // }
   return(
     <AuthContext.Provider value={{user, loading, login, logout, createTask, tasks}}>
     {!loading && children}

@@ -50,7 +50,8 @@ export default function UserDashboard({children}) {
   const taskdata = Object.fromEntries(formData.entries())
   try{
      const result = await createTask(taskdata)
-     console.log("Success! New Task:", result);
+     console.log("Success! New Task:", result.tasks);
+
      form.reset();
      
   }
@@ -58,6 +59,7 @@ export default function UserDashboard({children}) {
     console.log("Failed to create task", err);
   }
  }
+ console.log("Task List in Dashboard Componet", tasks.tasks)
  
   return (
     <div className={styles.wrapper}>
