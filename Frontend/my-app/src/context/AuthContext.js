@@ -18,8 +18,7 @@ export const AuthProvider = ({children}) =>{
 
             if(res.data.loggedIn){
              setUser(res.data.user)
-
-             const taskRes = await apiInstance.get(`/tasks/:${res.data.user._id}`);
+             const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`);
              if(taskRes.data.sucess){
                setTasks(taskRes.data.tasks)
              }

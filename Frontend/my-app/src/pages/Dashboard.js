@@ -111,9 +111,7 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-{
-
-tasks.map((item, index) => {
+{tasks.map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
   const { title, content, category, priority } = item.tasks || {};
 
