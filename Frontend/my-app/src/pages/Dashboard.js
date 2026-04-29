@@ -111,13 +111,14 @@ export default function UserDashboard({children}) {
             </div>
 
             {tasks.map((task) => (
+
               <div className={styles.taskCard} key={task.id}>
                 <div className={`${styles.taskCheck} ${task.done ? styles.taskCheckDone : ""}`}>
                   {task.done && <div className={styles.checkmark} />}
                 </div>
                 <div className={styles.taskBody}>
                   <div className={`${styles.taskTitle} ${task.done ? styles.taskTitleDone : ""}`}>
-                    {task.title}
+                    {task.tasks.tasks.title}
                   </div>
                   <div className={styles.taskContent}>{task.content}</div>
                   <div className={styles.taskMeta}>
