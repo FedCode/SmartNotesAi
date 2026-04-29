@@ -1,46 +1,64 @@
 import styles from "../style/Dashboard.module.css";
 import{useAuthContext} from '../context/AuthContext'
+import { useState } from "react";
 
-const tasks = [
-  {
-    id: 1,
-    title: "Meeting 0111233",
-    content: "Discuss the new dashboard layout and AI summary.",
-    category: "Research Analyst",
-    priority: "Medium",
-    done: false,
-  },
-  {
-    id: 2,
-    title: "Design review",
-    content: "Review new UI components with the team.",
-    category: "Design",
-    priority: "High",
-    done: false,
-  },
-  {
-    id: 3,
-    title: "Write API docs",
-    content: "Document all task endpoints for backend.",
-    category: "Development",
-    priority: "Low",
-    done: true,
-  },
-  {
-    id: 4,
-    title: "Marketing campaign",
-    content: "Plan the Q2 social media strategy and content calendar.",
-    category: "Marketing",
-    priority: "High",
-    done: false,
-  },
-];
+// const tasks = [
+//   {
+//     id: 1,
+//     title: "Meeting 0111233",
+//     content: "Discuss the new dashboard layout and AI summary.",
+//     category: "Research Analyst",
+//     priority: "Medium",
+//     done: false,
+//   },
+//   {
+//     id: 2,
+//     title: "Design review",
+//     content: "Review new UI components with the team.",
+//     category: "Design",
+//     priority: "High",
+//     done: false,
+//   },
+//   {
+//     id: 3,
+//     title: "Write API docs",
+//     content: "Document all task endpoints for backend.",
+//     category: "Development",
+//     priority: "Low",
+//     done: true,
+//   },
+//   {
+//     id: 4,
+//     title: "Marketing campaign",
+//     content: "Plan the Q2 social media strategy and content calendar.",
+//     category: "Marketing",
+//     priority: "High",
+//     done: false,
+//   },
+// ];
 
 
 
 export default function UserDashboard({children}) {
- const {user, loading} = useAuthContext();
- console.log("User in Dashborad", user.name[0], user?.name?.charAt(0))
+ const {user, loading, createTask, tasks} = useAuthContext();
+
+
+ const handleSubmit = async (e)=>{
+  e.preventDefault();
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const taskdata = Object.fromEntries(formData.entries())
+  try{
+     const result = await createTask(taskdata)
+     console.log("Success! New Task:", result);
+     form.reset();
+     
+  }
+  catch(err){
+    console.log("Failed to create task", err);
+  }
+ }
+ 
   return (
     <div className={styles.wrapper}>
       <div className={styles.dashboard}>
@@ -51,7 +69,7 @@ export default function UserDashboard({children}) {
             <h1>My Dashboard</h1>
             {/* <span>{dateStr}</span> */}
           </div>
-          <div className={styles.avatar}>U</div>
+          <div className={styles.avatar}>{user.name[0]}</div>
         </div>
 
         {/* Stats */}
@@ -81,7 +99,7 @@ export default function UserDashboard({children}) {
           <div className={styles.tasksPanel}>
             <div className={styles.panelHeader}>
               <span className={styles.panelTitle}>Tasks</span>
-              <button className={styles.addBtn}>+ Add task</button>
+              {/* <button className={styles.addBtn}>+ Add task</button> */}
             </div>
 
             <div className={styles.filterRow}>
@@ -118,40 +136,40 @@ export default function UserDashboard({children}) {
           {/* Form panel */}
           <div className={styles.formPanel}>
             <div className={styles.formTitle}>Add new task</div>
-
+            <form onSubmit={handleSubmit}>  
             <div className={styles.formGroup}>
               <label>Title</label>
-              <input type="text" placeholder="Task title" />
+              <input type="text" name='title' placeholder="Task title" />
             </div>
 
             <div className={styles.formGroup}>
               <label>Content</label>
-              <textarea placeholder="Describe the task..." />
+              <textarea name='content' placeholder="Describe the task..." />
             </div>
 
             <div className={styles.formGroup}>
               <label>Category</label>
-              <select defaultValue="Research Analyst">
-                <option>Research Analyst</option>
-                <option>Design</option>
-                <option>Development</option>
-                <option>Marketing</option>
-                <option>Management</option>
-                <option>Other</option>
+              <select defaultValue="Research Analyst" name='category'>
+                <option value='Research Analyst'>Research Analyst</option>
+                <option value='design'>Design</option>
+                <option value='development'>Development</option>
+                <option value='marketing'>Marketing</option>
+                <option value='management'>Management</option>
+                <option value='others'>Other</option>
               </select>
             </div>
-
             <div className={styles.formGroup}>
               <label>Priority</label>
-              <select defaultValue="Medium">
+              <select defaultValue="Medium" name="priority">
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
               </select>
             </div>
 
-            <button className={styles.submitBtn}>Save task</button>
-            <button className={styles.cancelBtn}>Cancel</button>
+            <button type="submit" className={styles.submitBtn}>Save task</button>
+            <button type="reset" className={styles.cancelBtn}>Cancel</button>
+            </form>
           </div>
 
         </div>
