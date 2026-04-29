@@ -129,7 +129,7 @@ export default function UserDashboard({children}) {
                 <span className={`${styles.badge} ${styles.badgeCat}`}>
                   {category}
                 </span>
-                <span className={`${styles.badge} ${item.tasks.priority}`}>
+                <span className={`${styles.badge} ${priority}`}>
                   {priority}
                 </span>
               </div>
