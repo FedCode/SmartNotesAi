@@ -112,31 +112,25 @@ export default function UserDashboard({children}) {
               <button className={styles.filterBtn}>Medium</button>
             </div>
 
-     {tasks.map((item, index) => {
-    // Destructure from the inner 'tasks' object
-    // item.tasks contains: title, content, category, priority
-    const { title, content, category, priority } = item.tasks || {};
+  {tasks.map((item, index) => {
+    // Look at your log: the data is at item.tasks.tasks.title
+    // We destructure 'tasks' from 'item', then title/content from that
+    const innerTasks = item.tasks?.tasks || item.tasks || {};
+    const { title, content, category, priority } = innerTasks;
 
     return (
-        <div className={styles.taskCard} key={item.taskID || index}>
+        <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
             <div className={styles.taskBody}>
                 <div className={styles.taskTitle}>
                     {title || "Untitled Task"}
                 </div>
-                <div className={styles.taskContent}>
-                    {content}
-                </div>
+                <div className={styles.taskContent}>{content}</div>
                 <div className={styles.taskMeta}>
                     <span className={styles.badgeCat}>{category}</span>
-                    <span className={`${styles.badge} ${priority}`}>
-                        {priority}
-                    </span>
+                    <span className={`${styles.badge} ${priority}`}>{priority}</span>
                 </div>
             </div>
-            <div className={styles.taskActions}>
-                <button className={styles.iconBtn}>✎</button>
-                <button className={styles.iconBtnDelete}>✕</button>
-            </div>
+            {/* ... rest of your buttons */}
         </div>
     );
 })}
