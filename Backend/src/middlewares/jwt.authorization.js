@@ -30,13 +30,25 @@ const jwtAuthorization =  (req, res, next)=>{
      
    
 
-        //const token = req.session.token;
-        res.header("Access-Control-Allow-Origin", "https://smartnotesaifrontend.onrender.com");
-        res.header("Access-Control-Allow-Credentials", "true");
+//const token = req.session.token;
+// res.header("Access-Control-Allow-Origin", "https://smartnotesaifrontend.onrender.com");
+// res.header("Access-Control-Allow-Credentials", "true");
+// console.log("🔐 Session:", req.session);
+// console.log("🔑 Token:", req.session?.token);
 
 
-            console.log("🔐 Session:", req.session);
-            console.log("🔑 Token:", req.session?.token);
+  // ✅ Manually set CORS headers so 401 responses don't get blocked
+    const allowedOrigins = [
+        "https://smartnotesaifrontend.onrender.com",
+        "http://localhost:3000",
+        "http://192.168.18.150:3000"
+    ];
+    
+    const origin = req.headers.origin;
+    if(allowedOrigins.includes(origin)){
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+    }
 
         const token = req.session?.token || req.headers.authorization?.split(" ")[1];
 

@@ -14,6 +14,8 @@ dotenv.config({
     ? '.env.production' 
     : '.env.development'
 });
+console.log("ENV:", process.env.NODE_ENV); // ← add this
+console.log("PORT:", process.env.PORT);     // ← add this
 const app = express();
 app.set('trust proxy', 1);
 
@@ -21,9 +23,9 @@ app.set('trust proxy', 1);
 
 const corsOptions = {
   origin: [
-        "https://smartnotesaifrontend.onrender.com", 
+         "https://smartnotesaifrontend.onrender.com",
         "http://localhost:3000",
-        "http://192.168.18.150:3000"
+        "http://192.168.18.150:3000" 
       ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -55,17 +57,29 @@ store.on('connected', () => {
 });
 
 
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false,
+//   store: store,
+//   cookie: {
+//     maxAge: 1 * 60 * 60 * 1000, // 5 Hours
+//     httpOnly: true,
+//     // secure: true, // Required for 'none' or 'lax' on Render HTTPS
+//     // sameSite: 'none' // Required if your Frontend and Backend are on different Render domains
+//     secure: process.env.NODE_ENV === 'production',  // ✅ false locally, true on Render
+//     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'  // ✅ lax locally
+//   }
+// }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: store,
   cookie: {
-    maxAge: 1 * 60 * 60 * 1000, // 5 Hours
+    maxAge: 1 * 60 * 60 * 1000,
     httpOnly: true,
-    // secure: true, // Required for 'none' or 'lax' on Render HTTPS
-    // sameSite: 'none' // Required if your Frontend and Backend are on different Render domains
-    secure: process.env.NODE_ENV === 'production',  // ✅ false locally, true on Render
+    secure: process.env.NODE_ENV === 'production',        // ✅ false locally
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'  // ✅ lax locally
   }
 }));
