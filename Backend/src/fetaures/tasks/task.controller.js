@@ -6,10 +6,10 @@ export default class TaskController{
   }
 async createTaskCont(req, res){
     try{
-       const {title, content, category, priority} = req.body;
+       const taskData = req.body.tasks;
        const userID = req.userID;
        
-       const newTask = await this.taskRepo.createTask(req.body, userID)
+       const newTask = await this.taskRepo.createTask(taskData, userID)
 
        if(!newTask){
         

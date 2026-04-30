@@ -6,9 +6,10 @@ import { ThreeDots } from 'react-loader-spinner'
 
 
 export default function UserDashboard({children}) {
- const {user, loading, createTask, tasks} = useAuthContext();
+ const {user, loading, createTask, tasks, deletTaskHandler} = useAuthContext();
  const [loadding, setLoading] = useState(false)
 const [filter , setFilter] =  useState('All')
+console.log("User On Dashboard", user._id)
 
  const handleSubmit = async (e)=>{
   e.preventDefault();
@@ -123,10 +124,10 @@ const handleFilter = (type) =>{
 {filteredTasks.map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
   const { title, content, category, priority } = item.tasks || {};
-
-
+   console.log("item", item)  
+  const taskid = item.taskID
   return (
-    <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
+    <div className={styles.taskCard} key={index}>
       <div className={styles.taskBody}>
         <div className={styles.taskTitle}>
           {title || "Untitled Task"}
@@ -143,7 +144,7 @@ const handleFilter = (type) =>{
       </div>
       <div className={styles.taskActions}>
               <button className={styles.iconBtn}>✎</button>
-              <button className={`${styles.iconBtn} ${styles.iconBtnDelete}`}>✕</button>
+              <button className={`${styles.iconBtn} ${styles.iconBtnDelete}`} onClick={()=>deletTaskHandler(taskid)}>✕ </button>
             </div>
     </div>
   );

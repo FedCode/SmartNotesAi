@@ -14,9 +14,9 @@ async createTask(taskData, userID){
            // 1. Manually create the specific entry we are pushing
         // This ensures we can return the DATA, not just the "Success" message
         const newTaskEntry = {
-            ...taskData , // title, content, category, priority
             taskID: new ObjectId(),
-            userID: userID,
+            userID:userID,
+            tasks:taskData,
             createdAt: new Date()
         };
            // const taskCreated =  await db.collection(this.taskCollection).insertOne({  userID:userID,tasks:{...taskData}, createdAt:new Date(), updatedAt:new Date() }); 

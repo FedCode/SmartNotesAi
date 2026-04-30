@@ -161,6 +161,29 @@ export const AuthProvider = ({children}) => {
         }
     };
 
+    // Edit task
+    // const editTaskHandler = ()=>{
+
+    // }
+    // Delete Task
+    const deletTaskHandler = async (taskID)=>{
+        try{
+           const result = await apiInstance.delete(`/tasks/delete/${taskID}`);
+                     //const taskRes = await apiInstance.get(`/tasks/${res.data.user._id}`);
+                    if(result.data.success){
+                          console.log('Result after Delete', result.data)
+                                   setTasks((prevTasks) => prevTasks.filter(task => task.taskID !== taskID));
+                                    console.log('Task deleted:', taskID);
+
+                    }
+                
+           }
+        catch(err){
+            console.log("Server Error", err )
+        }
+    }
+
+   console.log("User After Login", user) 
     const logout = async () => {
         try {
             await apiInstance.post('/user/logout');
@@ -174,7 +197,7 @@ export const AuthProvider = ({children}) => {
     };
 
     return (
-        <AuthContext.Provider value={{user, loading, login, logout, createTask, tasks}}>
+        <AuthContext.Provider value={{user, loading, login, logout, createTask, tasks, deletTaskHandler}}>
             {!loading && children}
         </AuthContext.Provider>
     );
