@@ -1,48 +1,14 @@
 import styles from "../style/Dashboard.module.css";
 import{useAuthContext} from '../context/AuthContext'
 import { useState } from "react";
-
-// const tasks = [
-//   {
-//     id: 1,
-//     title: "Meeting 0111233",
-//     content: "Discuss the new dashboard layout and AI summary.",
-//     category: "Research Analyst",
-//     priority: "Medium",
-//     done: false,
-//   },
-//   {
-//     id: 2,
-//     title: "Design review",
-//     content: "Review new UI components with the team.",
-//     category: "Design",
-//     priority: "High",
-//     done: false,
-//   },
-//   {
-//     id: 3,
-//     title: "Write API docs",
-//     content: "Document all task endpoints for backend.",
-//     category: "Development",
-//     priority: "Low",
-//     done: true,
-//   },
-//   {
-//     id: 4,
-//     title: "Marketing campaign",
-//     content: "Plan the Q2 social media strategy and content calendar.",
-//     category: "Marketing",
-//     priority: "High",
-//     done: false,
-//   },
-// ];
-
+import { toast, ToastContainer } from 'react-toastify';
+import { ThreeDots } from 'react-loader-spinner'
 
 
 export default function UserDashboard({children}) {
  const {user, loading, createTask, tasks} = useAuthContext();
-
-
+ const [loadding, setLoading] = useState(false)
+const [filter , setFilter] =  useState('All')
 
  const handleSubmit = async (e)=>{
   e.preventDefault();
@@ -54,16 +20,44 @@ export default function UserDashboard({children}) {
     //  console.log("Success! New Task:", result.tasks);
 
      form.reset();
+     toast.success('Task Added Successfully !')
      
   }
   catch(err){
     console.log("Failed to create task", err);
   }
  }
- console.log("Total task", tasks.length)
+ console.log("Total task", tasks.length);
+
+const handleFilter = (type) =>{
+  setLoading(true)
+  setFilter(type)
+  setTimeout(() => {
+     setLoading(false)
+  }, 500);
+  
+}
+
+  // ✅ Filter tasks based on current filter
+  const filteredTasks = tasks.filter((item) => {
+    if(filter === 'all') return true;
+    if(filter === 'High') return item.tasks?.priority === 'High';
+    if(filter === 'Medium') return item.tasks?.priority === 'Medium';
+    // if(filter === 'Low') return item.tasks?.priority === 'Low';
+   
+    return true;
+    
+  });
+
+  //alert('Pending Task Clicked')
+
    if(loading || !user) return null;
+
+
+
   return (
     <div className={styles.wrapper}>
+      <ToastContainer />
       <div className={styles.dashboard}>
 
         {/* Header */}
@@ -87,11 +81,11 @@ export default function UserDashboard({children}) {
           </div>
           <div className={styles.stat}>
             <div className={styles.statLabel}>Pending</div>
-            <div className={styles.statVal}>3</div>
+            <div className={styles.statVal}>{tasks.reduce((sum, cur) => cur.tasks?.priority === 'Medium' ? sum + 1 : sum, 0)}</div>
           </div>
           <div className={styles.stat}>
             <div className={styles.statLabel}>High priority</div>
-            <div className={styles.statVal}>2</div>
+            <div className={styles.statVal}>{tasks.reduce((sum, cur) => cur.tasks?.priority === 'High' ? sum + 1 : sum, 0)}</div>
           </div>
         </div>
 
@@ -106,16 +100,30 @@ export default function UserDashboard({children}) {
             </div>
 
             <div className={styles.filterRow}>
-              <button className={`${styles.filterBtn} ${styles.filterBtnActive}`}>All</button>
-              <button className={styles.filterBtn}>Pending</button>
-              <button className={styles.filterBtn}>Completed</button>
-              <button className={styles.filterBtn}>High</button>
-              <button className={styles.filterBtn}>Medium</button>
+              <button className={`${styles.filterBtn} ${filter === 'All' ? styles.filterBtnActive:''}`} onClick={()=>handleFilter('All')}>All</button>
+              <button className={styles.filterBtn} >Pending</button>
+              <button className={styles.filterBtn} >Completed</button>
+              <button className={`${styles.filterBtn} ${filter === 'High' ? styles.filterBtnActive:''} `} onClick={()=>handleFilter('High')}>High</button>
+              <button className={`${styles.filterBtn} ${filter === 'Medium' ? styles.filterBtnActive:''} `} onClick={()=>handleFilter('Medium')}>Medium</button>
             </div>
-
-{(tasks || []).map((item, index) => {
+{
+  loadding ?  <ThreeDots
+  height="20"
+  width="20"
+  radius="9"
+  margin="0 auto"
+  display="block"
+  color="#f97316"
+  ariaLabel="three-dots-loading"
+  wrapperStyle={{ margin: '20px auto', justifyContent:'center' }}
+  wrapperClass="custom-loader"
+  visible={true}
+/>
+  :(<>{filteredTasks.length === 0 ? (<p style={{padding: '20px', color: '#999'}}>No tasks found.</p>):(<>
+{filteredTasks.map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
   const { title, content, category, priority } = item.tasks || {};
+
 
   return (
     <div className={styles.taskCard} key={item.taskID?.$oid || item.taskID || index}>
@@ -140,12 +148,19 @@ export default function UserDashboard({children}) {
     </div>
   );
 })}
+</>)}</>)
+ }
+
+
+
+
      
           </div>
 
           {/* Form panel */}
           <div className={styles.formPanel}>
             <div className={styles.formTitle}>Add new task</div>
+            
             <form onSubmit={handleSubmit}>  
             <div className={styles.formGroup}>
               <label>Title</label>

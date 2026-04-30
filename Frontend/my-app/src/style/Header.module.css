@@ -19,6 +19,7 @@
   color: #e5e7eb;
   font-size: 14px;
   transition: 0.3s;
+  margin-right: 20px;
 }
 
 .nav a:hover {
@@ -32,6 +33,7 @@
   border-radius: 6px;
   color: white !important;
   transition: 0.3s;
+  border: 1px #f97316 solid;
 }
 
 .btn:hover {

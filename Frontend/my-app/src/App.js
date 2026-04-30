@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from '../src/pages/Home';
 import Header from "./components/Header";
 import Footer from "./components/Footer"
@@ -9,6 +10,7 @@ import Dashboard from '../src/pages/Dashboard';
 import {Routes, Route} from 'react-router';
 import ProtectedRoute from './components/ProtectRoute'
 import {AuthProvider} from './context/AuthContext'
+
 
 function App() {
   return (

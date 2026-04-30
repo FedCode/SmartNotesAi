@@ -61,7 +61,8 @@ import { useAuthContext } from '../context/AuthContext';
 import styles from "../style/Auth.module.css";
 import {Link} from 'react-router';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 // Adjust path to your CSS
 
 const Login = () => {
