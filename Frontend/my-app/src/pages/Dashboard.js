@@ -60,6 +60,7 @@ export default function UserDashboard({children}) {
     console.log("Failed to create task", err);
   }
  }
+ console.log("Total task", tasks.length)
    if(loading || !user) return null;
   return (
     <div className={styles.wrapper}>
@@ -78,7 +79,7 @@ export default function UserDashboard({children}) {
         <div className={styles.stats}>
           <div className={styles.stat}>
             <div className={styles.statLabel}>Total tasks</div>
-            <div className={styles.statVal}>{(tasks || []).map((item, index) => item.tasks.length)}</div>
+            <div className={styles.statVal}>{tasks.length}</div>
           </div>
           <div className={styles.stat}>
             <div className={styles.statLabel}>Completed</div>
