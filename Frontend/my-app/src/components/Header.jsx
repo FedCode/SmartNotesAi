@@ -6,6 +6,7 @@ const { user, logout } = useAuthContext();
 console.log("USER IN Header", user, logout)
   return (
     <header className={styles.header}>
+      <div className={styles.container}>
       <div className={styles.logo}>SmartNotesAI</div>
 
       <nav className={styles.nav}>
@@ -22,6 +23,7 @@ console.log("USER IN Header", user, logout)
           </>
         ) } 
       </nav>
+      </div>
     </header>
   );
 };
