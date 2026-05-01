@@ -2,14 +2,25 @@ import styles from "../style/Dashboard.module.css";
 import{useAuthContext} from '../context/AuthContext'
 import { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
-import { ThreeDots } from 'react-loader-spinner'
-
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function UserDashboard({children}) {
- const {user, loading, createTask, tasks, deletTaskHandler} = useAuthContext();
+ const {user, loading, createTask, tasks, deletTaskHandler, handlerEdittask} = useAuthContext();
  const [loadding, setLoading] = useState(false)
 const [filter , setFilter] =  useState('All')
-console.log("User On Dashboard", user._id)
+const [limit , setLimit] = useState(4)
+ const [editmode, setEditmode] = useState(null);
+ //const [status, setStatus] = useState([]);
+
+const openEdit = (item) => {
+    setEditmode({
+        taskID: item.taskID,
+        title: item.tasks.title,
+        content: item.tasks.content,
+        category: item.tasks.category,
+        priority: item.tasks.priority
+    });
+}
 
  const handleSubmit = async (e)=>{
   e.preventDefault();
@@ -17,13 +28,20 @@ console.log("User On Dashboard", user._id)
   const formData = new FormData(form);
   const taskdata = Object.fromEntries(formData.entries())
   try{
-     const result = await createTask(taskdata)
-    //  console.log("Success! New Task:", result.tasks);
 
-     form.reset();
-     toast.success('Task Added Successfully !')
+    if(editmode){
+      await handlerEdittask(user._id, editmode.taskID, taskdata);
+       setEditmode(null);
+    }
+ else{
      
-  }
+     await createTask(taskdata);
+     toast.success('Task Added Successfully !')
+ }
+   form.reset();
+    // const result = await createTask(taskdata)
+    //  console.log("Success! New Task:", result.tasks);
+ }
   catch(err){
     console.log("Failed to create task", err);
   }
@@ -50,11 +68,28 @@ const handleFilter = (type) =>{
     
   });
 
+
+const loadCount = filteredTasks.length;
+const handleLoadMore = ()=>{
+  setLimit((prevLimit)=> prevLimit === 4 ? loadCount:4)
+}
+
+// const handleStatusSubmit = async(e)=>{
+
+//   const form = e.currentTarget;
+//   const formData = new FormData(form);
+//   const taskdata = Object.fromEntries(formData.entries())
+//   try{
+//        const result = await toggleStatushandler(taskdata)
+//   }
+//   catch(err){
+//     console.log('Server Error', err)
+//   }
+// }
+
   //alert('Pending Task Clicked')
 
    if(loading || !user) return null;
-
-
 
   return (
     <div className={styles.wrapper}>
@@ -121,15 +156,28 @@ const handleFilter = (type) =>{
   visible={true}
 />
   :(<>{filteredTasks.length === 0 ? (<p style={{padding: '20px', color: '#999'}}>No tasks found.</p>):(<>
-{filteredTasks.map((item, index) => {
+{filteredTasks.slice(0, limit).map((item, index) => {
   // item.tasks is the nested object { title, content, category, priority }
   const { title, content, category, priority } = item.tasks || {};
    console.log("item", item)  
-  const taskid = item.taskID
+  const taskid = item.taskID;
+
+
   return (
     <div className={styles.taskCard} key={index}>
       <div className={styles.taskBody}>
-        <div className={styles.taskTitle}>
+        
+        <div className={styles.taskTitle} style={{display:'flex'}}>
+          {/* <form>
+           <input 
+            type="checkbox" 
+            checked={item.tasks.status === 'completed'} 
+            onChange={() => toggleStatushandler(item._id, item.tasks.status)} 
+        />
+        <span style={{ textDecoration: item.tasks.status === 'completed' ? 'line-through' : 'none' }}>
+            {item.tasks.title}
+        </span>
+          </form> */}
           {title || "Untitled Task"}
         </div>
         <div className={styles.taskContent}>
@@ -143,7 +191,7 @@ const handleFilter = (type) =>{
         </div>
       </div>
       <div className={styles.taskActions}>
-              <button className={styles.iconBtn}>✎</button>
+              <button className={styles.iconBtn} onClick={() => openEdit(item)}>✎</button>
               <button className={`${styles.iconBtn} ${styles.iconBtnDelete}`} onClick={()=>deletTaskHandler(taskid)}>✕ </button>
             </div>
     </div>
@@ -152,7 +200,7 @@ const handleFilter = (type) =>{
 </>)}</>)
  }
 
-
+{ filteredTasks.length > 0 ? <button type="buttom" onClick={handleLoadMore} style={{backgroundColor:'transparent',color:'white', cursor:'pointer', width:'150px', height:'35px', borderRadius:'6px', border:'0', margin:'20px auto', display:'block'}}>{limit === 4 ? "Load More":"Collpase All"}</button>:""}
 
 
      
@@ -160,22 +208,25 @@ const handleFilter = (type) =>{
 
           {/* Form panel */}
           <div className={styles.formPanel}>
-            <div className={styles.formTitle}>Add new task</div>
+            <div className={styles.formTitle}>
+                   {editmode ? "Edit Task":"Add New Task"}
+
+            </div>
             
             <form onSubmit={handleSubmit}>  
             <div className={styles.formGroup}>
-              <label>Title</label>
-              <input type="text" name='title' placeholder="Task title" />
+              <label>Title</label> 
+              <input type="text" name='title' placeholder="Task title" defaultValue={editmode?.title || ''} key ={editmode?.taskID || 'new'} />
             </div>
 
             <div className={styles.formGroup}>
               <label>Content</label>
-              <textarea name='content' placeholder="Describe the task..." />
+              <textarea name='content' placeholder="Describe the task..."  defaultValue={editmode?.content || ''} key ={editmode?.taskID || 'new'}/>
             </div>
 
             <div className={styles.formGroup}>
               <label>Category</label>
-              <select defaultValue="Research Analyst" name='category'>
+              <select defaultValue="Research Analyst" name='category' defaultValue={editmode?.category || ''} key ={editmode?.taskID || 'Research Analyst'}>
                 <option value='Research Analyst'>Research Analyst</option>
                 <option value='design'>Design</option>
                 <option value='development'>Development</option>
@@ -186,15 +237,20 @@ const handleFilter = (type) =>{
             </div>
             <div className={styles.formGroup}>
               <label>Priority</label>
-              <select defaultValue="Medium" name="priority">
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
+              <select defaultValue="Medium" name="priority" defaultValue={editmode?.category || ''} key ={editmode?.taskID || 'Medium'}>
+                <option value='Low'>Low</option>
+                <option value='Medium'>Medium</option>
+                <option value='High'>High</option>
               </select>
             </div>
 
-            <button type="submit" className={styles.submitBtn}>Save task</button>
-            <button type="reset" className={styles.cancelBtn}>Cancel</button>
+            <button type="submit" className={styles.submitBtn}>   
+                       {editmode ? 'Update Task' : 'Save Task'}  {/* ✅ button text changes */}
+</button>
+             <button type="button" className={styles.cancelBtn}
+            onClick={() => setEditmode(null)}>
+            {editmode ? 'Cancel Edit' : 'Cancel'}
+        </button>
             </form>
           </div>
 

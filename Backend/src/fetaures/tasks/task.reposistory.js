@@ -17,6 +17,7 @@ async createTask(taskData, userID){
             taskID: new ObjectId(),
             userID:userID,
             tasks:taskData,
+            status:'pending',
             createdAt: new Date()
         };
            // const taskCreated =  await db.collection(this.taskCollection).insertOne({  userID:userID,tasks:{...taskData}, createdAt:new Date(), updatedAt:new Date() }); 
@@ -41,10 +42,6 @@ async createTask(taskData, userID){
           console.log("Server Error", err)
         }
     }
-
-    
-
-
     async getAllTaskList(userID){
         try{
             const db = getDB();
@@ -62,42 +59,46 @@ async createTask(taskData, userID){
         }
     }
 
-  async editTaskByID(userID, taskID, tasks){
+async editTaskByID(userID, taskID, taskslist){
     try{
-       const db = getDB();
-       const collection = await db.collection('tasks');
+        const { title, content, category, priority } = taskslist;  // ✅ inside try
+        const db = getDB();
+        const collection = db.collection('tasks');
 
-       const result =  await collection.updateOne(
-        {userID:userID,
-         _id:new ObjectId(taskID)}, // Filter // $set is used to update if Not there it will add new Object
-        {$set:{tasks:tasks
-                //    title: tasks.title,
-                //     content: tasks.content,
-                //     category: tasks.category,
-                //     priority: tasks.priority,
-                //     updatedAt: new Date()
-        }} 
+        const result = await collection.updateOne(
+            { userID: new ObjectId(userID) },
+            { $set: {
+                "tasks.$[elem].tasks.title":    title,
+                "tasks.$[elem].tasks.content":  content,
+                "tasks.$[elem].tasks.category": category,
+                "tasks.$[elem].tasks.priority": priority,
+                "tasks.$[elem].updatedAt":      new Date()
+            }},
+            { arrayFilters: [{ "elem.taskID": new ObjectId(taskID) }] }
+        );
 
-       )
-       if(result.matchedCount === 0){
-         return {error:"Task is Not Found"}
-
-       }
-        return {success: true, modifiedCount: result.modifiedCount}
+        if(result.matchedCount === 0){
+            return { error: "Task not found" };
+        }
+        return { success: true, modifiedCount: result.modifiedCount };
     }
     catch(err){
-        console.log("Server Error", err)
+        console.log("Server Error", err);
         return { error: "Internal Server Error" };
-    } 
- }  
+    }
+}
 
 
  async deleteTaskByID(userID, taskID){
     try{
         const db = getDB();
         const collection = await db.collection('tasks');
-        const removeTask = await collection.deleteOne({userID:userID, _id:new ObjectId(taskID)})
+        const removeTask = await collection.updateOne(
+            {userID:new ObjectId(userID)},
+            {$pull:{tasks:{taskID:new ObjectId(taskID)}}}
 
+        )
+         console.log("Delete result:", removeTask);
         if(removeTask.modifiedCount === 0 ){
             return{error:'Task not delete'}
         }
@@ -108,6 +109,26 @@ async createTask(taskData, userID){
     }
  }
 
+
+ async checkTaskStatus(taskID, status){
+   try{
+       const db = getDB();
+       const collection = db.collection('tasks')
+
+       const result = await collection.udateOne(
+        {taskID:new ObjectId(taskID)},
+        {$set:{"tasks.status":status}}
+    )
+     if(result.matchedCount === 0){
+            return { error: "Status not Updated" };
+     }
+      return { success: true, modifiedCount: result.modifiedCount };
+
+   }
+   catch(err){
+       console.log("Server Error", err);
+   }
+ }
 
 
      

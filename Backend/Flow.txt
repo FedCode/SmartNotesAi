@@ -1,0 +1,14 @@
+Edit 
+Step 1 api :userID
+Controlloer , userID, TaskID, Data
+Reposistory , userID, TaskID, Data
+get Collection 
+updateOne(
+    {
+  userID:new ObjectID(userID)
+
+}
+ {$set{task}}
+
+ arrayFilter{ "elem.taskID": ne object (taskID)}
+)

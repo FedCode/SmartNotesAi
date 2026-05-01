@@ -13,12 +13,15 @@ taskRouter.get("/tasks/:userID",jwtAuthorization, (req, res)=>{
     taskController.getAllTask(req, res)
 })
 
-taskRouter.post("/tasks/edit/:taskID", jwtAuthorization, (req, res)=>{
+taskRouter.patch("/tasks/edit/:taskID", jwtAuthorization, (req, res)=>{
     taskController.updateTasks(req, res)
 })
 taskRouter.delete("/tasks/delete/:taskID" , jwtAuthorization, (req, res)=>{
     taskController.deleteUserTask(req, res)
 })
 
+taskRouter.patch('/tasks/status/:taskID', jwtAuthorization, (req, res)=>{
+    taskController.checkStatus(req, res)
+})
 export default taskRouter;
 
